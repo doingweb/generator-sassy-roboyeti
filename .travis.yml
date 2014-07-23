@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - '0.10'
+before_install:
+  - currentfolder=${PWD##*/}
+  - if [ "$currentfolder" != 'generator-sassy-roboyeti' ]; then cd .. && eval "mv $currentfolder generator-sassy-roboyeti" && cd generator-sassy-roboyeti; fi
+
