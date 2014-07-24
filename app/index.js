@@ -7,17 +7,11 @@ var chalk = require('chalk');
 
 
 var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
-  init: function () {
+  initializing: function () {
     this.pkg = require('../package.json');
-
-    this.on('end', function () {
-      if (!this.options['skip-install']) {
-        this.installDependencies();
-      }
-    });
   },
 
-  askFor: function () {
+  prompting: function () {
     var done = this.async();
 
     // Have Yeoman greet the user.
@@ -37,7 +31,12 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
-  app: function () {
+  configuring: function () {
+    this.copy('editorconfig', '.editorconfig');
+    this.copy('jshintrc', '.jshintrc');
+  },
+
+  default: function () {
     this.mkdir('app');
     this.mkdir('app/templates');
 
@@ -45,9 +44,10 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
     this.copy('_bower.json', 'bower.json');
   },
 
-  projectfiles: function () {
-    this.copy('editorconfig', '.editorconfig');
-    this.copy('jshintrc', '.jshintrc');
+  end: function () {
+    if (!this.options['skip-install']) {
+      this.installDependencies();
+    }
   }
 });
 
