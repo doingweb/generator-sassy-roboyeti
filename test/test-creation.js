@@ -19,9 +19,26 @@ describe('sassy-roboyeti generator', function () {
 
   it('creates expected files', function (done) {
     var expected = [
-      // add files you expect to exist here.
-      '.jshintrc',
-      '.editorconfig'
+      '.gitignore',
+      'package.json',
+      'bower.json',
+      'Gruntfile.js',
+      'credentials.json',
+      'src/content/index.hbs',
+      'src/content/images',
+      'src/css/site.scss',
+      'src/css/_foundation-components.scss',
+      'src/css/_foundation-settings.scss',
+      'src/css/_styles.scss',
+      'src/data/site.yml',
+      'src/js/init-foundation.js',
+      'src/plugins',
+      'src/templates/helpers',
+      'src/templates/layouts/site.hbs',
+      'src/templates/partials/navigation.hbs',
+      'src/templates/partials/browse-happy.hbs',
+      'src/templates/partials/scripts.hbs',
+      'src/templates/partials/google-analytics.hbs'
     ];
 
     helpers.mockPrompt(this.app, {

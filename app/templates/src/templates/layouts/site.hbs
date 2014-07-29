@@ -1,0 +1,25 @@
+<!doctype html>
+<html class="no-js" lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>{{#if title}}{{title}} | {{/if}}{{site.title}}</title>
+		<meta name="description" content="{{site.description}}">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
+
+		<link href="{{assets}}/css/site.css" rel="stylesheet" type="text/css">
+		{{#if pageCss}}<link href="{{assets}}/css/{{pageCss}}" rel="stylesheet" type="text/css">{{/if}}
+		<script src="{{assets}}/js/modernizr.js"></script>
+	</head>
+	<body>
+		{{> navigation }}
+		{{> browse-happy }}
+		<main>
+			{{> body }}
+		</main>
+		{{> scripts }}
+		{{> google-analytics }}
+	</body>
+</html>
