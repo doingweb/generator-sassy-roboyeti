@@ -18,11 +18,15 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
     this.log(yosay('Welcome to the marvelous Sassy Roboyeti generator!'));
 
     var prompts = [{
+      name: 'siteTitle',
+      message: 'What would you like the title of your site to be?',
+      default: 'A very new sassy-roboyeti site'
+    }, {
       type: 'confirm',
       name: 'useGoogleAnalytics',
       message: 'Would you like to use Google Analytics?',
       default: true
-    },{
+    }, {
       name: 'googleAnalyticsCode',
       message: 'What is your Google Analytics Tracking ID?',
       default: 'UA-XXXXXXXX-X',
@@ -32,9 +36,10 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
     }];
 
     this.prompt(prompts, function (props) {
+      this.siteTitle = props.siteTitle;
       this.useGoogleAnalytics = props.useGoogleAnalytics;
       this.googleAnalyticsCode = props.googleAnalyticsCode;
-      
+
       done();
     }.bind(this));
   },

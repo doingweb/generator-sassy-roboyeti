@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>{{#if title}}{{title}} | {{/if}}{{site.title}}</title>
-		<meta name="description" content="{{site.description}}">
+		{{#if description}}<meta name="description" content="{{description}}">{{/if}}
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
@@ -20,6 +20,6 @@
 			{{> body }}
 		</main>
 		{{> scripts }}
-		{{> google-analytics }}
+		<% if (useGoogleAnalytics) { %>{{> google-analytics }}<% } %>
 	</body>
 </html>

@@ -41,7 +41,7 @@ describe('sassy-roboyeti generator', function () {
     'src/templates/partials/scripts.hbs'
   ];
 
-  it('creates minimal files', function (done) {
+  it('creates the base files', function (done) {
     helpers.mockPrompt(this.app, {
       'useGoogleAnalytics': false
     });
@@ -50,12 +50,28 @@ describe('sassy-roboyeti generator', function () {
 
     this.app.run({}, function () {
       helpers.assertFile(expected);
-      
+
       done();
     });
   });
 
-  it('includes files for Google Analytics', function (done) {
+  // TODO: What other options?
+
+  it('prompts for the site title', function (done) {
+    var siteTitle = 'this is the site title';
+
+    helpers.mockPrompt(this.app, {
+      'siteTitle': siteTitle
+    });
+
+    this.app.run({}, function () {
+      assert.fileContent('src/data/site.yml', new RegExp('^title: ' + siteTitle + '$', 'm'));
+
+      done();
+    });
+  });
+
+  it('can optionally use Google Analytics', function (done) {
     var gaCode = 'UA-12345678-1';
 
     helpers.mockPrompt(this.app, {
@@ -69,7 +85,8 @@ describe('sassy-roboyeti generator', function () {
 
     this.app.run({}, function () {
       helpers.assertFile(expectedFiles);
-      assert.fileContent('src/data/site.yml', new RegExp('googleAnalyticsTrackingID: ' + gaCode));
+      assert.fileContent('src/data/site.yml', new RegExp('^googleAnalyticsTrackingID: ' + gaCode + '$', 'm'));
+      assert.fileContent('src/templates/layouts/site.hbs', /\{\{> google-analytics \}\}/);
 
       done();
     });
