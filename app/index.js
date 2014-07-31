@@ -19,28 +19,35 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
 
     var prompts = [{
       type: 'confirm',
-      name: 'someOption',
-      message: 'Would you like to enable this option?',
+      name: 'useGoogleAnalytics',
+      message: 'Would you like to use Google Analytics?',
       default: true
+    },{
+      name: 'googleAnalyticsCode',
+      message: 'What is your Google Analytics Tracking ID?',
+      default: 'UA-XXXXXXXX-X',
+      when: function (answers) {
+        return answers.useGoogleAnalytics;
+      }
     }];
 
     this.prompt(prompts, function (props) {
-      this.someOption = props.someOption;
-
+      this.useGoogleAnalytics = props.useGoogleAnalytics;
+      this.googleAnalyticsCode = props.googleAnalyticsCode;
+      
       done();
     }.bind(this));
   },
 
   configuring: function () {
     this.copy('gitignore', '.gitignore');
-    this.copy('credentials.json');
   },
 
   default: function () {
-    this.copy('_Gruntfile.js', 'Gruntfile.js');
-
     this.copy('_package.json', 'package.json');
     this.copy('_bower.json', 'bower.json');
+
+    this.copy('_Gruntfile.js', 'Gruntfile.js');
 
     this.copy('src/content/index.hbs');
     this.mkdir('src/content/images');
@@ -50,7 +57,7 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
     this.copy('src/css/_styles.scss');
     this.copy('src/css/site.scss');
 
-    this.copy('src/data/site.yml');
+    this.template('src/data/site.yml');
 
     this.copy('src/js/init-foundation.js');
 
@@ -61,7 +68,9 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
     this.copy('src/templates/partials/navigation.hbs');
     this.copy('src/templates/partials/browse-happy.hbs');
     this.copy('src/templates/partials/scripts.hbs');
-    this.copy('src/templates/partials/google-analytics.hbs');
+    if (this.useGoogleAnalytics) {
+      this.copy('src/templates/partials/google-analytics.hbs');
+    }
   },
 
   install: function () {

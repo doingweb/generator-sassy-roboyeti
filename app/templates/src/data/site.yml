@@ -1,2 +1,5 @@
 title: Sassy Roboyeti
 description: This is a blank Sassy Roboyeti site.
+<% if (useGoogleAnalytics) {
+  %>googleAnalyticsTrackingID: <%= googleAnalyticsCode %><%
+} %>
