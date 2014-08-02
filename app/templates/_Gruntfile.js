@@ -8,10 +8,10 @@ module.exports = function(grunt) {
       src: 'src',
       dist: 'dist',
       tmp: '.tmp',
-      assets: '<%= paths.dist %>/assets',
-      content: '<%= paths.src %>/content',
-      data: '<%= paths.src %>/data',
-      templates: '<%= paths.src %>/templates',
+      assets: '<%%= paths.dist %>/assets',
+      content: '<%%= paths.src %>/content',
+      data: '<%%= paths.src %>/data',
+      templates: '<%%= paths.src %>/templates',
       bower: 'bower_components'
     },
 
@@ -19,22 +19,22 @@ module.exports = function(grunt) {
 
     watch: {
       assemble: {
-        files: ['<%= paths.src %>/{content,data,templates}/**/*.{md,hbs,yml,json}'],
+        files: ['<%%= paths.src %>/{content,data,templates}/**/*.{md,hbs,yml,json}'],
         tasks: ['assemble']
       },
       sass: {
-        files: ['<%= paths.src %>/css/**/*.scss'],
+        files: ['<%%= paths.src %>/css/**/*.scss'],
         tasks: ['sass:server']
       },
       livereload: {
         options: {
-          livereload: '<%= connect.options.livereload %>'
+          livereload: '<%%= connect.options.livereload %>'
         },
         files: [
-          '<%= paths.dist %>/**/*.html',
-          '<%= paths.assets %>/css/{,*/}*.css',
-          '<%= paths.assets %>/js/{,*/}*.js',
-          '<%= paths.assets %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+          '<%%= paths.dist %>/**/*.html',
+          '<%%= paths.assets %>/css/{,*/}*.css',
+          '<%%= paths.assets %>/js/{,*/}*.js',
+          '<%%= paths.assets %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
     },
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         options: {
           open: true,
           base: [
-            '<%= paths.dist %>'
+            '<%%= paths.dist %>'
           ]
         }
       }
@@ -58,18 +58,18 @@ module.exports = function(grunt) {
 
     assemble: {
       options: {
-        layoutdir: '<%= paths.templates %>/layouts',
+        layoutdir: '<%%= paths.templates %>/layouts',
         layout: 'site.hbs',
-        partials: '<%= paths.templates %>/partials/*.hbs',
-        assets: '<%= paths.assets %>',
-        data: '<%= paths.data %>/*.{json,yml}',
-        helpers: ['<%= paths.templates %>/helpers/*.js'],
+        partials: '<%%= paths.templates %>/partials/*.hbs',
+        assets: '<%%= paths.assets %>',
+        data: '<%%= paths.data %>/*.{json,yml}',
+        helpers: ['<%%= paths.templates %>/helpers/*.js'],
         marked: {
           gfm: true
         },
         plugins: ['assemble-middleware-sitemap', 'assemble-contrib-permalinks'],
         sitemap: {
-          dest: '<%= paths.dist %>/'
+          dest: '<%%= paths.dist %>/'
         },
         permalinks: {
           preset: 'pretty'
@@ -78,9 +78,9 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= paths.content %>/',
+          cwd: '<%%= paths.content %>/',
           src: '**/*.{md,hbs}',
-          dest: '<%= paths.dist %>/'
+          dest: '<%%= paths.dist %>/'
         }]
       }
     },
@@ -89,30 +89,30 @@ module.exports = function(grunt) {
       images: {
         files: [{
           expand: true,
-          cwd: '<%= paths.content %>/images/',
+          cwd: '<%%= paths.content %>/images/',
           src: '**/*.{png,jpg,gif}',
-          dest: '<%= paths.assets %>/images/'
+          dest: '<%%= paths.assets %>/images/'
         }]
       }
     },
 
 		modernizr: {
       dist: {
-        devFile: '<%= paths.bower %>/modernizr/modernizr.js',
-        outputFile: '<%= paths.assets %>/js/modernizr.js'
+        devFile: '<%%= paths.bower %>/modernizr/modernizr.js',
+        outputFile: '<%%= paths.assets %>/js/modernizr.js'
       }
 		},
 
     sass: {
       options: {
-        includePaths: ['<%= paths.bower %>']
+        includePaths: ['<%%= paths.bower %>']
       },
       dist: {
         options: {
           outputStyle: 'compressed'
         },
         files: {
-          '<%= paths.assets %>/css/site.css': '<%= paths.src %>/css/site.scss'
+          '<%%= paths.assets %>/css/site.css': '<%%= paths.src %>/css/site.scss'
         }
       },
       server: {
@@ -120,7 +120,7 @@ module.exports = function(grunt) {
           sourceMap: true
         },
         files: {
-          '<%= paths.assets %>/css/site.css': '<%= paths.src %>/css/site.scss'
+          '<%%= paths.assets %>/css/site.css': '<%%= paths.src %>/css/site.scss'
         }
       }
     },
@@ -135,57 +135,57 @@ module.exports = function(grunt) {
     },
 
     clean: {
-      dist: '<%= paths.dist %>/**',
-      tmp: '<%= paths.tmp %>',
-      bowerAssets: '<%= paths.dist %>/bower_components',
-      js: ['<%= paths.assets %>/js/*', '!<%= paths.assets %>/js/modernizr.js']
+      dist: '<%%= paths.dist %>/**',
+      tmp: '<%%= paths.tmp %>',
+      bowerAssets: '<%%= paths.dist %>/bower_components',
+      js: ['<%%= paths.assets %>/js/*', '!<%%= paths.assets %>/js/modernizr.js']
     },
 
 		useminPrepare: {
-			home: '<%= paths.dist %>/index.html',
+			home: '<%%= paths.dist %>/index.html',
 			options: {
-				dest: '<%= paths.dist %>'
+				dest: '<%%= paths.dist %>'
 			}
 		},
 
     filerev: {
       css: {
-        src: '<%= paths.assets %>/css/*.css'
+        src: '<%%= paths.assets %>/css/*.css'
       },
       js: {
-        src: '<%= paths.assets %>/js/*.js'
+        src: '<%%= paths.assets %>/js/*.js'
       }
     },
 
 		usemin: {
-      html: ['<%= paths.dist %>/**/*.html']
+      html: ['<%%= paths.dist %>/**/*.html']
 		},
 
     copy: {
       bower: {
         files: [{
           expand: true,
-          cwd: '<%= paths.bower %>/',
+          cwd: '<%%= paths.bower %>/',
           src: [
             'jquery/**',
             'foundation/**'
           ],
-          dest: '<%= paths.dist %>/bower_components/'
+          dest: '<%%= paths.dist %>/bower_components/'
         }]
       },
       js: {
         files: [{
           expand: true,
-          cwd: '<%= paths.src %>/js/',
+          cwd: '<%%= paths.src %>/js/',
           src: ['*.js'],
-          dest: '<%= paths.assets %>/js/'
+          dest: '<%%= paths.assets %>/js/'
         }]
       }
     },
 
     cdnify: {
       dist: {
-        html: ['<%= paths.dist %>/**/*.html']
+        html: ['<%%= paths.dist %>/**/*.html']
       }
     },
 
@@ -197,31 +197,53 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: '<%= paths.dist %>/',
+          cwd: '<%%= paths.dist %>/',
           src: '**/*.html',
-          dest: '<%= paths.dist %>'
+          dest: '<%%= paths.dist %>'
+        }]
+      }
+    }<% if (useS3) { %>,
+
+    compress: {
+      public: {
+        options: {
+          mode: 'gzip'
+        },
+        files: [{
+          expand: true,
+          cwd: '<%%= paths.dist %>/',
+          src: ['**/*.{html,css,js}'],
+          dest: '<%%= paths.tmp %>/gzip/'
         }]
       }
     },
 
-		s3: {
-			options: {
-				bucket: '<%= credentials.aws.bucket %>',
-				key: '<%= credentials.aws.key %>',
-				secret: '<%= credentials.aws.secret %>',
-				region: '<%= credentials.aws.region %>',
-				gzip: true,
-				access: 'public-read'
-			},
-			deploy: {
-				upload: grunt.file.expand({ cwd: '<%= paths.dist %>', filter: 'isFile' }, '**').map(function (file) {
-					return {
-						src: '<%= paths.dist %>/' + file,
-						dest: file
-					}
-				})
+		aws_s3: {
+			public: {
+        options: {
+          bucket: '<%%= credentials.aws.bucket %>',
+          region: '<%%= credentials.aws.region %>',
+          accessKeyId: '<%%= credentials.aws.key %>',
+          secretAccessKey: '<%%= credentials.aws.secret %>'
+        },
+        files: [
+          {
+            expand: true,
+            cwd: '<%%= paths.tmp %>/gzip/',
+            src: ['**/*.{html,css,js}'],
+            dest: './',
+            params: {
+              'ContentEncoding': 'gzip'
+            }
+          }, {
+            expand: true,
+            cwd: '<%%= paths.dist %>/',
+            src: ['**', '!**/*.{html,css,js}'],
+            dest: './'
+          }
+        ]
 			}
-		}
+		}<% } %>
 	});
 
   grunt.loadNpmTasks('assemble');
@@ -242,7 +264,13 @@ module.exports = function(grunt) {
     'cdnify',
     'htmlmin',
     'clean:bowerAssets'
-  ]);
+  ]);<% if (useS3) { %>
+
+  grunt.registerTask('deploy', [
+    'build:dist',
+    'compress',
+    'aws_s3'
+  ]);<% } %>
 
   grunt.registerTask('build:server', [
     'clean:dist',

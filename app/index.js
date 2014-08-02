@@ -22,37 +22,83 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
       message: 'What would you like the title of your site to be?',
       default: 'A very new sassy-roboyeti site'
     }, {
-      type: 'confirm',
       name: 'useGoogleAnalytics',
       message: 'Would you like to use Google Analytics?',
+      type: 'confirm',
       default: true
     }, {
       name: 'googleAnalyticsCode',
       message: 'What is your Google Analytics Tracking ID?',
       default: 'UA-XXXXXXXX-X',
-      when: function (answers) {
-        return answers.useGoogleAnalytics;
-      }
+      when: usingGoogleAnalytics
+    }, {
+      name: 'useS3',
+      message: 'Will you be deploying to Amazon S3?',
+      type: 'confirm',
+      default: true
+    }, {
+      name: 's3Bucket',
+      message: 'What is the S3 bucket\'s name?',
+      when: usingS3
+    }, {
+      name: 's3Region',
+      message: 'In which region is the bucket?',
+      type: 'list',
+      choices: [
+        'us-east-1',
+        'us-west-2',
+        'us-west-1',
+        'eu-west-1',
+        'ap-southeast-1',
+        'ap-southeast-2',
+        'ap-northeast-1',
+        'sa-east-1'
+      ],
+      default: 'us-east-1',
+      when: usingS3
+    }, {
+      name: 's3AccessKeyId',
+      message: 'Which access key ID should we use?',
+      when: usingS3
+    }, {
+      name: 's3AccessKeySecret',
+      message: 'And what is that access key\'s secret?',
+      when: usingS3
     }];
 
     this.prompt(prompts, function (props) {
       this.siteTitle = props.siteTitle;
+
       this.useGoogleAnalytics = props.useGoogleAnalytics;
       this.googleAnalyticsCode = props.googleAnalyticsCode;
 
+      this.useS3 = props.useS3;
+      this.s3Bucket = props.s3Bucket;
+      this.s3Region = props.s3Region;
+      this.s3AccessKeyId = props.s3AccessKeyId;
+      this.s3AccessKeySecret = props.s3AccessKeySecret;
+
       done();
     }.bind(this));
+
+    function usingGoogleAnalytics (answers) {
+      return answers.useGoogleAnalytics;
+    }
+
+    function usingS3 (answers) {
+      return answers.useS3;
+    }
   },
 
   configuring: function () {
     this.copy('gitignore', '.gitignore');
   },
 
-  default: function () {
-    this.copy('_package.json', 'package.json');
+  writing: function () {
+    this.template('_package.json', 'package.json');
     this.copy('_bower.json', 'bower.json');
 
-    this.copy('_Gruntfile.js', 'Gruntfile.js');
+    this.template('_Gruntfile.js', 'Gruntfile.js');
 
     this.copy('src/content/index.hbs');
     this.mkdir('src/content/images');
@@ -73,8 +119,13 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
     this.copy('src/templates/partials/navigation.hbs');
     this.copy('src/templates/partials/browse-happy.hbs');
     this.copy('src/templates/partials/scripts.hbs');
+
     if (this.useGoogleAnalytics) {
       this.copy('src/templates/partials/google-analytics.hbs');
+    }
+
+    if (this.useS3) {
+      this.template('credentials.json');
     }
   },
 

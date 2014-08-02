@@ -55,8 +55,6 @@ describe('sassy-roboyeti generator', function () {
     });
   });
 
-  // TODO: What other options?
-
   it('prompts for the site title', function (done) {
     var siteTitle = 'this is the site title';
 
@@ -85,10 +83,51 @@ describe('sassy-roboyeti generator', function () {
 
     this.app.run({}, function () {
       helpers.assertFile(expectedFiles);
-      assert.fileContent('src/data/site.yml', new RegExp('^googleAnalyticsTrackingID: ' + gaCode + '$', 'm'));
-      assert.fileContent('src/templates/layouts/site.hbs', /\{\{> google-analytics \}\}/);
+      assert.fileContent([
+        ['src/data/site.yml', new RegExp('^googleAnalyticsTrackingID: ' + gaCode + '$', 'm')],
+        ['src/templates/layouts/site.hbs', /\{\{> google-analytics \}\}/]
+      ]);
 
       done();
     });
+  });
+
+  it('can optionally deploy to S3', function (done) {
+    var
+      s3Bucket = 'bucket',
+      s3Region = 'region',
+      s3AccessKeyId = 'accesskeyid',
+      s3AccessKeySecret = 'accesskeysecret';
+    helpers.mockPrompt(this.app, {
+      'useS3': true,
+      's3Bucket': s3Bucket,
+      's3Region': s3Region,
+      's3AccessKeyId': s3AccessKeyId,
+      's3AccessKeySecret': s3AccessKeySecret
+    });
+
+    var expectedFiles = baseFiles.concat([
+      'credentials.json'
+    ]);
+
+    this.app.run({}, function () {
+      helpers.assertFile(expectedFiles);
+
+      assert.fileContent('Gruntfile.js', /^\s*compress: \{\s*$/m);
+      assert.fileContent('Gruntfile.js', /^\s*aws_s3: \{\s*$/m);
+      assert.fileContent('Gruntfile.js', /^\s*grunt\.registerTask\('deploy',.*$/m);
+
+      var credentials = this.app.dest.readJSON('credentials.json');
+      var pkg = this.app.dest.readJSON('package.json');
+
+      assert.textEqual(credentials.aws.bucket, s3Bucket);
+      assert.textEqual(credentials.aws.region, s3Region);
+      assert.textEqual(credentials.aws.key, s3AccessKeyId);
+      assert.textEqual(credentials.aws.secret, s3AccessKeySecret);
+      assert.ok(pkg.dependencies['grunt-contrib-compress']);
+      assert.ok(pkg.dependencies['grunt-aws-s3']);
+
+      done();
+    }.bind(this));
   });
 });
