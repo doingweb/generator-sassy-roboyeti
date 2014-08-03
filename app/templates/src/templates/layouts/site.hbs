@@ -19,7 +19,7 @@
 		<main>
 			{{> body }}
 		</main>
-		{{> scripts }}
-		<% if (useGoogleAnalytics) { %>{{> google-analytics }}<% } %>
+		{{> scripts }}<% if (useGoogleAnalytics) { %>
+		{{> google-analytics }}<% } %>
 	</body>
 </html>

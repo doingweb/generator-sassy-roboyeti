@@ -55,7 +55,7 @@ describe('sassy-roboyeti generator', function () {
     });
   });
 
-  it('prompts for the site title', function (done) {
+  it('titles the site', function (done) {
     var siteTitle = 'this is the site title';
 
     helpers.mockPrompt(this.app, {
@@ -69,6 +69,7 @@ describe('sassy-roboyeti generator', function () {
     });
   });
 
+  // TODO: Break this into multiple tests under a describe.
   it('can optionally use Google Analytics', function (done) {
     var gaCode = 'UA-12345678-1';
 
@@ -85,13 +86,14 @@ describe('sassy-roboyeti generator', function () {
       helpers.assertFile(expectedFiles);
       assert.fileContent([
         ['src/data/site.yml', new RegExp('^googleAnalyticsTrackingID: ' + gaCode + '$', 'm')],
-        ['src/templates/layouts/site.hbs', /\{\{> google-analytics \}\}/]
+        ['src/templates/layouts/site.hbs', /^\s*\{\{> google-analytics \}\}\s*$/m]
       ]);
 
       done();
     });
   });
 
+  // TODO: Break this into multiple tests under a describe.
   it('can optionally deploy to S3', function (done) {
     var
       s3Bucket = 'bucket',

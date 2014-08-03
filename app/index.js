@@ -115,7 +115,7 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
     this.mkdir('src/plugins');
 
     this.mkdir('src/templates/helpers');
-    this.copy('src/templates/layouts/site.hbs');
+    this.template('src/templates/layouts/site.hbs');
     this.copy('src/templates/partials/navigation.hbs');
     this.copy('src/templates/partials/browse-happy.hbs');
     this.copy('src/templates/partials/scripts.hbs');
