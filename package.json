@@ -1,7 +1,7 @@
 {
   "name": "generator-sassy-roboyeti",
   "version": "0.0.1",
-  "description": "Yeoman generator",
+  "description": "Scaffolds out a basic static website using Assemble and Foundation.",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "doingweb/generator-sassy-roboyeti",
@@ -20,7 +20,9 @@
     "app"
   ],
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "assemble",
+    "foundation"
   ],
   "dependencies": {
     "chalk": "~0.4.0",
