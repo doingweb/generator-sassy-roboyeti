@@ -1,5 +1,5 @@
 {
-  "name": "chrisdoingweb",
+  "name": "<%= packageName %>",
   "private": true,
   "ignore": [
     "node_modules",

@@ -1,5 +1,5 @@
 {
-  "name": "chrisdoingweb",
+  "name": "<%= packageName %>",
   "private": true,
   "dependencies": {
     "assemble": "0.4.37",

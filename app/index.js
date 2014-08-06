@@ -4,13 +4,9 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 var chalk = require('chalk');
-
+var _ = require('underscore.string');
 
 var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
-  initializing: function () {
-    this.pkg = require('../package.json');
-  },
-
   prompting: function () {
     var done = this.async();
 
@@ -18,6 +14,10 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
     this.log(yosay('Welcome to the marvelous Sassy Roboyeti generator!'));
 
     var prompts = [{
+      name: 'packageName',
+      message: 'What shall we call this website package?',
+      default: _.slugify(this.appname)
+    }, {
       name: 'siteTitle',
       message: 'What would you like the title of your site to be?',
       default: 'A very new sassy-roboyeti site'
@@ -58,7 +58,7 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
       when: usingS3
     }, {
       name: 's3AccessKeyId',
-      message: 'Which access key ID should we use?',
+      message: 'What is our access key ID?',
       when: usingS3
     }, {
       name: 's3AccessKeySecret',
@@ -67,6 +67,7 @@ var SassyRoboyetiGenerator = yeoman.generators.Base.extend({
     }];
 
     this.prompt(prompts, function (props) {
+      this.packageName = props.packageName;
       this.siteTitle = props.siteTitle;
 
       this.useGoogleAnalytics = props.useGoogleAnalytics;

@@ -26,6 +26,10 @@ module.exports = function(grunt) {
         files: ['<%%= paths.src %>/css/**/*.scss'],
         tasks: ['sass:server']
       },
+      js: {
+        files: ['<%%= paths.src %>/js/**/*.js'],
+        tasks: ['concurrent:js']
+      },
       livereload: {
         options: {
           livereload: '<%%= connect.options.livereload %>'
@@ -126,6 +130,11 @@ module.exports = function(grunt) {
     },
 
     concurrent: {
+      js: [
+        'copy:bower',
+        'copy:js',
+        'modernizr'
+      ],
       assets: [
         'copy:bower',
         'copy:js',

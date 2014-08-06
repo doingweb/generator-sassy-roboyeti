@@ -1,8 +1,7 @@
-@charset "UTF-8";
+@import
+  "foundation/scss/foundation/functions",
+  "foundation-settings",
+  "foundation/scss/normalize",
+  "foundation-components",
 
-@import "foundation/scss/foundation/functions";
-@import "foundation-settings";
-@import "foundation/scss/normalize";
-@import "foundation-components";
-
-@import "styles";
+  "styles";

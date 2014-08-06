@@ -55,7 +55,24 @@ describe('sassy-roboyeti generator', function () {
     });
   });
 
-  it('titles the site', function (done) {
+  it('prompts for the package name', function (done) {
+    var name = 'package-name';
+
+    helpers.mockPrompt(this.app, {
+      'packageName': name
+    });
+
+    this.app.run({}, function () {
+      var npmPkg = this.app.dest.readJSON('package.json');
+      var bowerPkg = this.app.dest.readJSON('bower.json');
+      assert.textEqual(npmPkg.name, name);
+      assert.textEqual(bowerPkg.name, name);
+
+      done();
+    }.bind(this));
+  });
+
+  it('prompts for a site title', function (done) {
     var siteTitle = 'this is the site title';
 
     helpers.mockPrompt(this.app, {
