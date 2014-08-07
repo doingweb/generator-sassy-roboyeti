@@ -24,7 +24,7 @@ Your Foundation variable overrides go in `_foundation-settings.scss`, allowing y
 
 `_foundation-components.scss` contains imports for the various components of Foundation, most of which are commented out until you need them.
 
-Your own styles can go in `_styles.scss`. Or, you know, whatever you want.
+Your own styles can go in `_styles.scss`. Or, you know, wherever you want. [Just a suggestion.](http://codepen.io/chriscoyier/blog/codepens-css#organization-files)
 
 ### Connect, watch, live reload
 
@@ -40,7 +40,7 @@ Just use Modernizr; [`grunt-modernizr`](https://github.com/Modernizr/grunt-moder
 
 ### Cache busting
 
-Your CSS and javascript are revved and references rewritten, so new versions aren't ignored by caches.
+Your CSS and javascript are revved and references rewritten, so those pesky caches don't try to tell *you* what's what.
 
 ### CDNification
 
@@ -84,7 +84,7 @@ Adds the `google-analytics.hbs` partial, references it in `site.hbs`, and adds t
 
 ##### S3 deployment
 
-You can deploy to S3 by supplying the bucket's name, region, and access key details. See [Amazon's instruction for hosting static websites in S3](http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html).
+You can deploy to S3 by supplying the bucket's name, region, and access key details. See [Amazon's instructions for hosting static websites in S3](http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html).
 
 ## Tasks
 
